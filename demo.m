@@ -12,14 +12,14 @@
 % Set the MATLAB paths
 setup;
 
-error('Don''t run this script, it is only meant as a collection of useful commands');
+% error('Don''t run this script, it is only meant as a collection of useful commands');
 
 
 
 % ---------- Use/test our networks
 
 % Load our network
-netID= 'vd16_tokyoTM_conv5_3_vlad_preL2_intra_white';
+netID= 'vd16_pitts30k_conv5_3_vlad_preL2_intra_white';
 paths= localPaths();
 load( sprintf('%s%s.mat', paths.ourCNNs, netID), 'net' );
 net= relja_simplenn_tidy(net);
@@ -40,7 +40,8 @@ feats= computeRepresentation(net, im); % add `'useGPU', false` if you want to us
 %  `imageFns` is a cell array containing image file names relative to the `imPath` (i.e. `[imPath, imageFns{i}]` is a valid JPEG image), the representations are saved in binary format (single 4-byte floats). Batch size used for computing the forward pass can be changed by adding the `batchSize` parameter, e.g. `'batchSize', 10`. Note that if your input images are not all of same size (they are in place recognition datasets), you should set `batchSize` to 1.
 
 %  To test the network on a place recognition dataset, set up the test dataset
-dbTest= dbTokyo247();
+% dbTest= dbTokyo247();
+dbTest= dbTiny('train');
 
 % Set the output filenames for the database/query image representations
 paths= localPaths();
