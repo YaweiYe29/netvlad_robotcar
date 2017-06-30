@@ -16,7 +16,7 @@ setup;
 
 
 
-% ---------- Use/test our networks
+%% ---------- Use/test our networks
 
 % Load our network
 netID= 'vd16_pitts30k_conv5_3_vlad_preL2_intra_white';
@@ -58,7 +58,7 @@ plot(opts.recallNs, recall, 'ro-'); grid on; xlabel('N'); ylabel('Recall@N');
 
 
 
-% ---------- Full train and test example: Tokyo
+%% ---------- Full train and test example: Tokyo
 % Train: Tokyo Time Machine, Test: Tokyo 24/7
 
 % Set up the train/val datasets
@@ -179,12 +179,16 @@ net= addPCA(net, dbTrain, 'doWhite', true, 'pcaDim', 4096, 'batchSize', 10); % a
 
 
 
-% ---------- Tiny dummy training example
+%% ---------- Tiny dummy training example
 
 % This is just to see if you got all the dependencies and configurations set up correctly.
-% Get a tiny version of the Tokyo Time Machine dataset from our research page ( www.di.ens.fr/willow/research/netvlad/ ) as well as the dataset specification. Point paths.dsetRootTokyoTM in localPaths.m to its location. Run the code below to train max pooling on top of AlexNet for this tiny dataset:
+% Get a tiny version of the Tokyo Time Machine dataset from our research page
+% ( www.di.ens.fr/willow/research/netvlad/ ) as well as the dataset specification. 
+% Point paths.dsetRootTokyoTM in localPaths.m to its location. 
+% Run the code below to train max pooling on top of AlexNet for this tiny dataset:
 
-dbTrain= dbTiny('train'); dbVal= dbTiny('val');
+dbTrain= dbTiny('train');
+dbVal= dbTiny('val');
 
 trainWeakly(dbTrain, dbVal, ...
     'netID', 'caffe', 'layerName', 'conv5', ...
@@ -196,5 +200,5 @@ trainWeakly(dbTrain, dbVal, ...
     'epochTestFrequency', 1, 'test0', true, ...
     'nTestSample', inf, 'nTestRankSample', 40, ...
     'saveFrequency', 15, 'doDraw', true, ...
-    'useGPU', true, 'numThreads', 12, ...
+    'useGPU', false, 'numThreads', 12, ...
     'info', 'tiny test');
