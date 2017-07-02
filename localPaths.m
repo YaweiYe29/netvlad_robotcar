@@ -20,12 +20,12 @@ function paths= localPaths()
     paths.dsetSpecDir= '~/Data/netvlad/datasets';
     
     % --- dataset locations
-    paths.dsetRootPitts= '~/Data/netvlad/datasets/Pittsburgh/'; % should contain images/ and queries/
-    paths.dsetRootTokyo247= '~/Data/netvlad/datasets/Tokyo247/'; % should contain images/ and query/
-    paths.dsetRootTokyoTM= '~/Data/netvlad/datasets/TokyoTM/'; % should contain images/
-    paths.dsetRootOxford= '~/Relja/Work/Databases/OxfordBuildings/'; % should contain images/ and groundtruth/, and be writable
-    paths.dsetRootParis= '~/Relja/Work/Databases/Paris/'; % should contain images/ (with subfolders defense, eiffel, etc), groundtruth/ and corrupt.txt, and be writable
-    paths.dsetRootHolidays= '~/Relja/Work/Databases/Holidays/'; % should contain jpg/ for the original holidays, or jpg_rotated/ for rotated Holidays, and be writable
+    paths.dsetRootPitts= '~/Database/Pittsburgh/'; % should contain images/ and queries/
+    paths.dsetRootTokyo247= '~/Database/Tokyo247/'; % should contain images/ and query/
+    paths.dsetRootTokyoTM= '~/Database/TokyoTM/'; % should contain images/
+    paths.dsetRootOxford= '~/Database/OxfordBuildings/'; % should contain images/ and groundtruth/, and be writable
+    paths.dsetRootParis= '~/Databases/Paris/'; % should contain images/ (with subfolders defense, eiffel, etc), groundtruth/ and corrupt.txt, and be writable
+    paths.dsetRootHolidays= '~/Databases/Holidays/'; % should contain jpg/ for the original holidays, or jpg_rotated/ for rotated Holidays, and be writable
     
     % --- our networks
     % models used in our paper, download them from our research page
