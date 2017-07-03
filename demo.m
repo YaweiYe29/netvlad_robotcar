@@ -59,6 +59,10 @@ plot(opts.recallNs, recall, 'ro-'); grid on; xlabel('N'); ylabel('Recall@N');
 
 
 %% ---------- Full train and test example: Tokyo
+
+% Set the MATLAB paths
+setup;
+
 % Train: Tokyo Time Machine, Test: Tokyo 24/7
 
 % Set up the train/val datasets
@@ -69,8 +73,7 @@ lr= 0.0001;
 % --- Train the VGG-16 network + NetVLAD, tuning down to conv5_1
 sessionID= trainWeakly(dbTrain, dbVal, ...
     'netID', 'vd16', 'layerName', 'conv5_3', 'backPropToLayer', 'conv5_1', ...
-    'method', 'vlad_preL2_intra', ...
-    'learningRate', lr, ...
+    'method', 'vlad_preL2_intra', 'learningRate', lr, ...
     'doDraw', true);
 
 % Get the best network
@@ -125,11 +128,12 @@ for iCropToDim= 1:length(cropToDims)
 end
 
 
-
-% ---------- Pittsburgh examples
+%% ---------- Pittsburgh examples
+% Set the MATLAB paths
+setup;
 
 % Pitts250k or Pitts30k?
-doPitts250k= false;
+doPitts250k= true;
 
 if doPitts250k
     % Pittsburgh 250k
