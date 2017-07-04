@@ -8,23 +8,19 @@ classdef oxfordRobotCarParser<handle
         seqTimeStamp;
         utm;
         nonTrivPosDistThr;
-        whichSet;
     end
     
     methods
-        function obj= oxfordRobotCarParser(whichSet, seqTimeStamp, posDisThr, ...
+        function obj= oxfordRobotCarParser(seqTimeStamp, posDisThr, ...
                 nonTrivPosDistThr)
-            % whichSet is one of: train, val, test
-            assert( ismember(whichSet, {'train', 'val', 'test'}) );
-            obj.whichSet= whichSet;
             
             obj.posDisThr= posDisThr;
             obj.nonTrivPosDistThr= nonTrivPosDistThr;
             
             paths= localPaths();
             datasetRoot= paths.dsetRootRobotCar;
-
-            datasetPathList = cell(11, 1);
+            
+            datasetPathList = cell(size(seqTimeStamp));
             for i = 1:length(seqTimeStamp)
                 datasetPathList{i} = {[datasetRoot seqTimeStamp{i} ...
                     '/stereo/centre/undistort_images_crop/']};
@@ -34,16 +30,22 @@ classdef oxfordRobotCarParser<handle
             seqIdx = [];
             for j = 1:length(datasetPathList)
                 imageSingleSeq = dir(char(fullfile(datasetPathList{j},'*.jpg')));
-                imageFnsSingleSeq = {imageSingleSeq.name}';
+                
+                imageFoldersSingleSeq = char(imageSingleSeq.folder);
+                imageNamesSingleSeq = char(imageSingleSeq.name);
+                imageFnsSingleSeq = cellstr(strcat(string(...
+                    imageFoldersSingleSeq(:,44:end)), ...
+                    '/', string(imageNamesSingleSeq)));
                 imageFnsAllSeq = [imageFnsAllSeq; imageFnsSingleSeq];
+                
                 seqIdx = [seqIdx; j*ones(length(imageFnsSingleSeq), 1)];
             end
-            
             obj.imageFns = imageFnsAllSeq;
-            obj.imageTimeStamp = cellfun(@(x) str2double(x(1:16)), imageFnsAllSeq);
+            obj.imageTimeStamp = cellfun(@(x) str2double(x(end-23:end-8)), imageFnsAllSeq);
             obj.seqIdx = seqIdx;
             obj.seqTimeStamp = seqTimeStamp;
             obj.loadUTMPosition();
+            obj.removeImagesWithBadGPS();
         end
         
         function loadUTMPosition(obj)
@@ -53,7 +55,7 @@ classdef oxfordRobotCarParser<handle
             imageGPSPositions = [];
             gpsDataRoot = paths.gpsDataRootRobotCar;
             
-            for i = 1:length(obj.seqTimeStamp)
+            parfor i = 1:length(obj.seqTimeStamp)
                 % Load GPS+INS measurements.
                 ins_file = [gpsDataRoot obj.seqTimeStamp{i} '/gps/ins.csv'];
                 
@@ -63,8 +65,18 @@ classdef oxfordRobotCarParser<handle
                 imageGPSPositions  = ...
                     [imageGPSPositions; imageGPSPositionsSingleSeq];
             end
+            
             % Store keyframe position estimate from GPS+INS measurements
             obj.utm = imageGPSPositions;
+        end
+        
+        function removeImagesWithBadGPS(obj)
+            validGPSMeasurements = ~isnan(obj.utm(:,1));
+            
+            obj.imageFns = obj.imageFns(validGPSMeasurements);
+            obj.imageTimeStamp = obj.imageTimeStamp(validGPSMeasurements);
+            obj.seqIdx = obj.seqIdx(validGPSMeasurements);
+            obj.utm = obj.utm(validGPSMeasurements, :);
         end
     end
 end
