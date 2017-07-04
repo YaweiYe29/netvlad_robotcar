@@ -26,7 +26,8 @@ function paths= localPaths()
     paths.dsetRootOxford= '~/Database/OxfordBuildings/'; % should contain images/ and groundtruth/, and be writable
     paths.dsetRootParis= '~/Databases/Paris/'; % should contain images/ (with subfolders defense, eiffel, etc), groundtruth/ and corrupt.txt, and be writable
     paths.dsetRootHolidays= '~/Databases/Holidays/'; % should contain jpg/ for the original holidays, or jpg_rotated/ for rotated Holidays, and be writable
-    
+    paths.dsetRootRobotCar= '/media/yawei/My_Passport/RobotCar-Datasets/';
+    paths.gpsDataRootRobotCar= '/media/yawei/My_Passport/DSO_Map/GPS/';
     % --- our networks
     % models used in our paper, download them from our research page
     paths.ourCNNs= '~/Data/netvlad/models/';

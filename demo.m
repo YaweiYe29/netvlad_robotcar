@@ -37,7 +37,13 @@ feats= computeRepresentation(net, im); % add `'useGPU', false` if you want to us
 %
 %          serialAllFeats(net, imPath, imageFns, outputFn);
 %
-%  `imageFns` is a cell array containing image file names relative to the `imPath` (i.e. `[imPath, imageFns{i}]` is a valid JPEG image), the representations are saved in binary format (single 4-byte floats). Batch size used for computing the forward pass can be changed by adding the `batchSize` parameter, e.g. `'batchSize', 10`. Note that if your input images are not all of same size (they are in place recognition datasets), you should set `batchSize` to 1.
+% `imageFns` is a cell array containing image file names relative to the 
+% `imPath` (i.e. `[imPath, imageFns{i}]` is a valid JPEG image), the 
+% representations are saved in binary format (single 4-byte floats). 
+% Batch size used for computing the forward pass can be changed by adding 
+% the `batchSize` parameter, e.g. `'batchSize', 10`. Note that if your 
+% input images are not all of same size (they are in place recognition 
+% datasets), you should set `batchSize` to 1.
 
 %  To test the network on a place recognition dataset, set up the test dataset
 % dbTest= dbTokyo247();
