@@ -50,7 +50,8 @@ classdef dbBase < handle
                 end
                 clear dbStruct propName;
             else
-                error('Download the database file (%s.mat) and set the correct dsetSpecDir in localPaths.m', db.name);
+                error(['Download the database file (%s.mat) and set the' ...
+                    ' correct dsetSpecDir in localPaths.m'], db.name);
             end
             
             % generate other useful data
